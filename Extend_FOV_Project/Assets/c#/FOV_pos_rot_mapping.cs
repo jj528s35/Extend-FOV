@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*測試用，沒有用到 */
 public class FOV_pos_rot_mapping : MonoBehaviour {
 
 	public GameObject Head, Body;
