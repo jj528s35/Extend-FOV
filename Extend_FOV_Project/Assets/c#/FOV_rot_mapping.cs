@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SpatialTracking;
 
 public class FOV_rot_mapping : MonoBehaviour {
 
 	public GameObject HMD, Body, Cam;
 	public AnimationCurve curve;
-	public bool remapping = true;
+	public bool remapping = true, Visualzation = false;
+	public Image Body_Bar, Rot_mapping_Bar;
 	private Vector3 Head_rotation, Body_rotation;
 	private float Head_Body_rot_y, curve_mapping_value, angle;
 
@@ -48,10 +50,31 @@ public class FOV_rot_mapping : MonoBehaviour {
 			transform.localRotation = Quaternion.Euler(Head_rotation.x, Head_rotation.y, Head_rotation.z);
 		}
 		
+
+		if(Visualzation)
+		{
+			if(curve_mapping_value > 0)
+			{
+				Body_Bar.fillClockwise = true;
+				Rot_mapping_Bar.fillClockwise = true;
+			}
+			else
+			{
+				Body_Bar.fillClockwise = false;
+				Rot_mapping_Bar.fillClockwise = false;
+			}
+			
+			Body_Bar.fillAmount = angle / 360;
+			Rot_mapping_Bar.fillAmount = curve_mapping_value / 360;
+		}
+
+
 		//Debug 
 		if(Input.GetKeyDown(KeyCode.Space)){
 			Debug.Log("Mapping "+ angle + " , " + curve_mapping_value + " , " + Head_rotation.y);
 		}
+
+
 		
 	}
 }
