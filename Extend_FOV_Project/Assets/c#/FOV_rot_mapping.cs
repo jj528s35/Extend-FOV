@@ -11,7 +11,7 @@ public class FOV_rot_mapping : MonoBehaviour {
 	public bool remapping = true, Visualzation = false;
 	public Image Body_Bar, Rot_mapping_Bar;
 	private Vector3 Head_rotation, Body_rotation;
-	private float Head_Body_rot_y, curve_mapping_value, angle;
+	private float Head_Body_rot_y, curve_mapping_value, angle, fill_angle;
 
 	// Use this for initialization
 	void Start () {
@@ -64,13 +64,21 @@ public class FOV_rot_mapping : MonoBehaviour {
 				Rot_mapping_Bar.fillClockwise = false;
 			}
 			
-			Body_Bar.fillAmount = angle / 360;
-			Rot_mapping_Bar.fillAmount = curve_mapping_value / 360;
+			if(Mathf.Abs(angle) > 180) 
+			{
+				fill_angle = Mathf.Abs(angle) - 360;
+				fill_angle = Mathf.Abs(fill_angle);
+			}
+			else 
+				fill_angle = Mathf.Abs(angle);
+			Body_Bar.fillAmount = fill_angle / 360;
+			Rot_mapping_Bar.fillAmount = Mathf.Abs(curve_mapping_value) / 360;
 		}
 
 
 		//Debug 
 		if(Input.GetKeyDown(KeyCode.Space)){
+			Debug.Log("HMD "+ Head_rotation.y + " Body " + Body_rotation.y + " " + fill_angle);
 			Debug.Log("Mapping "+ angle + " , " + curve_mapping_value + " , " + Head_rotation.y);
 		}
 
